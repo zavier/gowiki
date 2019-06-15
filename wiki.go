@@ -14,7 +14,7 @@ type Page struct {
 
 var templates = template.Must(template.ParseFiles("edit.html", "view.html"))
 
-var validPath = regexp.MustCompile("^(edit|save|view)/([a-zA-Z0-9]+)$")
+var validPath = regexp.MustCompile("^/(edit|save|view)/([a-zA-Z0-9]+)$")
 
 func (p *Page) save() error {
 	filename := p.Title + ".txt"
@@ -81,7 +81,13 @@ func makeHandler(fn func(http.ResponseWriter, *http.Request, string)) http.Handl
 	}
 }
 
+// 默认访问首页，跳转到编辑test页面
+func indexHandler(w http.ResponseWriter, r *http.Request) {
+	http.Redirect(w, r, "/edit/test", http.StatusFound)
+}
+
 func main() {
+	http.HandleFunc("/", indexHandler)
 	http.HandleFunc("/view/", makeHandler(viewHandler))
 	http.HandleFunc("/edit/", makeHandler(editHandler))
 	http.HandleFunc("/save/", makeHandler(saveHandler))
