@@ -24,3 +24,6 @@ demo: http://localhost:8080/edit/test
 http://localhost:8080/view/【文件名(不包含后缀)】
 demo: http://localhost:8080/view/test
 ```
+
+
+**此分支为添加函数参数使用闭包**
